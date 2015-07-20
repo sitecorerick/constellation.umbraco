@@ -1,0 +1,27 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+	<id>$id$</id>
+	<version>$version$</version>
+	<title>$title$</title>
+	<authors>Richard J. Cabral</authors>
+	<owners>Richard J. Cabral</owners>
+	<projectUrl>https://github.com/sitecorerick/constellation.Umbraco</projectUrl>
+	<requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<summary>A library for Controller-based Umbraco installations.</summary>
+	<description>
+		This library introduces ease of use for handmade ViewModels that represent IPublishedContent items. The ViewModels should inherit from Models.ContetnViewModel in order to take advantage of the
+		automatic property mapping provided by this library.
+
+		To Use:
+			1. Create ViewModels that represent content. ViewModel properties should match types and names of the published content Properties[] collection.
+			2. Each ViewModel should have a ContentType attribute on the class that specifies the Alias for the content that it represents.
+			3. To convert a PublishedContent to a ViewModel, use the extension methods provided in this library. You may automatically cast to the "best fit" type, or you may cast to a specific ViewModel type.
+
+		This library was ported from concepts in Constellation.Sitecore.Items - it is not a 1:1 match, expect evolution.
+	</description>
+	<releaseNotes>Initial Release</releaseNotes>
+	<copyright>Copyright 2015</copyright>
+	<tags>Umbraco</tags>
+  </metadata>
+</package>
