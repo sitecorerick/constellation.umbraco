@@ -90,6 +90,11 @@
 					continue;
 				}
 
+				if (field.Value == null)
+				{
+					continue;
+				}
+
 				var fieldType = field.Value.GetType();
 
 				if (!property.PropertyType.IsAssignableFrom(fieldType))
