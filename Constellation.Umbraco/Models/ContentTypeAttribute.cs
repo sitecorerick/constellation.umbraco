@@ -1,18 +1,20 @@
 ﻿namespace Constellation.Umbraco.Models
 {
+	using System;
+
 	/// <summary>
 	/// Allows a class to be labelled as representing a specific Umbraco Content Type.
 	/// </summary>
-	public class ContentTypeAttribute
+	public class ContentTypeAttribute : Attribute
 	{
 		#region Constructors
 		/// <summary>
 		/// Initializes a new instance of  the <see cref="ContentTypeAttribute"/> class.
 		/// </summary>
-		/// <param name="typeName"></param>
-		public ContentTypeAttribute(string typeName)
+		/// <param name="aliasName"></param>
+		public ContentTypeAttribute(string aliasName)
 		{
-			TypeName = typeName;
+			AliasName = aliasName;
 		}
 		#endregion
 
@@ -20,7 +22,7 @@
 		/// <summary>
 		/// Gets the Umbraco content type name for this instance.
 		/// </summary>
-		public string TypeName { get; set; }
+		public string AliasName { get; set; }
 		#endregion
 	}
 }

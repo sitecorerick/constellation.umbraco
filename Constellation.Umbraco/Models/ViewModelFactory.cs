@@ -25,13 +25,25 @@
 
 		#region Methods
 
-		internal static ContentViewModel GetViewModel(IPublishedContent content)
+		internal static TModel GetViewModel<TModel>(IPublishedContent content)
+			where TModel : ContentViewModel
 		{
-			if (content == null)
+			var model = Activator.CreateInstance(typeof(TModel), content) as TModel;
+
+			// TODO: figure out how to handle inheritance and/or abstract classes, or Interfaces!!!
+
+			if (model == null)
 			{
-				throw new ArgumentNullException("content", "ViewModelFactory requires a non-null instance to convert to a ViewModel");
+				return model;
 			}
 
+			PopulateModel(model, content);
+
+			return model;
+		}
+
+		internal static ContentViewModel GetViewModel(IPublishedContent content)
+		{
 			ContentViewModel model = new ContentViewModel(content);
 			Type type;
 			if (CandidateClasses.TryGetValue(content.DocumentTypeAlias, out type))
@@ -39,13 +51,19 @@
 				model = Activator.CreateInstance(type, content) as ContentViewModel;
 			}
 
-
 			if (model == null)
 			{
 				return model;
 			}
 
-			type = model.GetType();
+			PopulateModel(model, content);
+
+			return model;
+		}
+
+		private static void PopulateModel(ContentViewModel model, IPublishedContent content)
+		{
+			var type = model.GetType();
 			var properties = new Dictionary<string, PropertyInfo>(StringComparer.OrdinalIgnoreCase);
 
 			foreach (var property in type.GetProperties())
@@ -81,8 +99,6 @@
 
 				property.SetValue(model, field.Value);
 			}
-
-			return model;
 		}
 
 		private static IDictionary<string, Type> CreateCandidateClassesList()
@@ -99,11 +115,11 @@
 				{
 					if (type.IsClass)
 					{
-						string templateID = GetContentTypeFromAttribute(type);
+						string alias = GetContentTypeFromAttribute(type);
 
-						if (!string.IsNullOrEmpty(templateID))
+						if (!string.IsNullOrEmpty(alias))
 						{
-							list.Add(templateID, type);
+							list.Add(alias, type);
 						}
 					}
 				}
@@ -123,9 +139,9 @@
 				{
 					var attribute = attributes[0] as ContentTypeAttribute;
 
-					if (attribute != null && !string.IsNullOrEmpty(attribute.TypeName))
+					if (attribute != null && !string.IsNullOrEmpty(attribute.AliasName))
 					{
-						return attribute.TypeName;
+						return attribute.AliasName;
 					}
 				}
 			}
