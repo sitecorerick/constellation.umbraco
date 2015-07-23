@@ -83,9 +83,9 @@
 
 			foreach (var field in content.Properties)
 			{
-				var property = properties[field.PropertyTypeAlias];
+				PropertyInfo property;
 
-				if (property == null)
+				if (!properties.TryGetValue(field.PropertyTypeAlias, out property))
 				{
 					continue;
 				}
