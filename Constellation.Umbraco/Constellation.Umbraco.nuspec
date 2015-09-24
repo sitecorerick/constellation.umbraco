@@ -20,7 +20,7 @@
 
 		This library was ported from concepts in Constellation.Sitecore.Items - it is not a 1:1 match, expect evolution.
 	</description>
-	<releaseNotes>Bug Fix: Added support for collections and enumerables. Fixed ContentTypeAttribute inheritance. made TModel casting more flexible.</releaseNotes>
+	<releaseNotes>Bug Fix: Null Reference Exeption when Umbraco property has a null value.</releaseNotes>
 	<copyright>Copyright 2015</copyright>
 	<tags>Umbraco</tags>
   </metadata>
